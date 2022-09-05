@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AlertError } from "./AlertError";
 
-export const Form = (tareas, setTareas) => {
+export const Form = ({ tareas, setTareas, tarea }) => {
   const [titulo, setTitulo] = useState("");
   const [fecha, setFecha] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
   const [error, setError] = useState(false);
+  useEffect(() => {
+    if (Object.keys(tarea).length > 0) {
+      setTitulo(tarea.titulo);
+      setFecha(tarea.fecha);
+      setDescripcion(tarea.descripcion);
+    }
+  }, [tarea]);
+
+  const generarId = () => {
+    const id = Math.random().toString(5).substring(2); //Esto genera un Id unico para cada tarea creada.
+    return id;
+  };
+
   //Validacion formulario
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,31 +34,33 @@ export const Form = (tareas, setTareas) => {
       titulo,
       fecha,
       descripcion,
+      id: generarId(),
     };
+
     setTareas([...tareas, objetoTareas]);
 
-    setTitulo('');
-    setFecha('');
-    setDescripcion('');
+    setTitulo("");
+    setFecha("");
+    setDescripcion("");
   };
 
   return (
     <div className="md:w-1/2 lg:2/5 mx-5">
       <h2 className="font-black text-3xl text-center mb-10">
-        Creación de Tareas
+        📝 Creación de Tareas
       </h2>
 
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg py-10 px-10 mb-10"
       >
-        {error && <AlertError mensaje='Faltan campos por diligenciar'/>}
+        {error && <AlertError mensaje="Faltan campos por diligenciar" />}
         <div className="mb-5">
           <label
             htmlFor="titulo"
             className="block text-gray-700 uppercase font-bold"
           >
-            Titulo
+            🖋 Titulo
           </label>
 
           <input
@@ -63,7 +78,7 @@ export const Form = (tareas, setTareas) => {
             htmlFor="fecha"
             className="block text-gray-700 uppercase font-bold"
           >
-            Fecha
+            🗓 Fecha
           </label>
 
           <input
@@ -80,7 +95,7 @@ export const Form = (tareas, setTareas) => {
             htmlFor="descripcion"
             className="block text-gray-700 uppercase font-bold"
           >
-            Descripción
+            📋 Descripción
           </label>
 
           <textarea
@@ -93,11 +108,19 @@ export const Form = (tareas, setTareas) => {
           />
         </div>
 
-        <input
-          type="submit"
-          className="bg-blue-600 w-full p-3 text-white uppercase font-bold rounded-md hover:bg-blue-700 transition-colors cursor-pointer "
-          value="Crear Tarea"
-        />
+        {!tarea.id ? (
+          <input
+            type="submit"
+            className="bg-blue-600 w-full p-3 text-white uppercase font-bold rounded-md hover:bg-blue-700 transition-colors cursor-pointer "
+            value="Crear Tarea"
+          />
+        ) : (
+          <input
+            type="submit"
+            className="bg-purple-600 w-full p-3 text-white uppercase font-bold rounded-md hover:bg-blue-700 transition-colors cursor-pointer "
+            value="Actualizar Tarea"
+          />
+        )}
       </form>
     </div>
   );
