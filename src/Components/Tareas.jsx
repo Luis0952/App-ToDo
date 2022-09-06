@@ -1,12 +1,12 @@
 export const Tareas = ({ tarea, setTarea, eliminarTarea }) => {
   const { titulo, fecha, descripcion, id } = tarea;
 
- /* const handleEliminar = () => {
+ const handleEliminar = () => {
     const respuesta = confirm("¿Desea Eliminar esta tarea? 🤔");
     if (respuesta) {
       eliminarTarea(id);
     }
-  };*/
+  };
   return (
     <div className=" bg-white shadow-md px-5 py-10 rounded-lg mb-5">
       <p className="font-bold mb-3 text-gray-700 uppercase">
@@ -34,7 +34,7 @@ export const Tareas = ({ tarea, setTarea, eliminarTarea }) => {
         <button
           className="bg-violet-600 hover:bg-700 mt-4 rounded-md text-white p-1.5 font-bold"
           type="button"
-          onClick={()=>eliminarTarea(id)}
+          onClick={handleEliminar}
         >
           🗑️ Eliminar
         </button>

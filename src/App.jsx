@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form } from "./Components/Form";
 import { Header } from "./Components/Header";
 import { ListaTareas } from "./Components/ListaTareas";
@@ -7,6 +7,19 @@ import { ListaTareas } from "./Components/ListaTareas";
 function App() {
   const [tareas, setTareas] = useState([])
   const [tarea, setTarea] = useState({})
+
+  useEffect(()=>{
+    const obtenerTareasLocalStorage=()=>{
+      const tareasLocalStorage=localStorage.getItem('tareas')
+      console.log(tareasLocalStorage)
+    };
+    obtenerTareasLocalStorage();
+  },[])
+
+  useEffect(()=>{
+    localStorage.setItem('tareas',JSON.stringify( tareas ))
+  },[tareas])
+
 
   const eliminarTarea=(id)=>{
     const actualizarTarea=tareas.filter( tarea=>tarea.id !== id );

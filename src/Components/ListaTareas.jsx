@@ -6,7 +6,6 @@ export const ListaTareas = ({ tareas, setTarea, eliminarTarea }) => {
       {tareas && tareas.length ? (
         <>
           {" "}
-          (
           <h2 className="text-red-600 font-black text-3xl text-center mb-10">
             Mis Tareas Pendientes 📚
           </h2>
@@ -19,7 +18,6 @@ export const ListaTareas = ({ tareas, setTarea, eliminarTarea }) => {
                 eliminarTarea={eliminarTarea}/>
             );
           })}
-          )
         </>
       ) : (
         <h2 className="text-violet-700 font-black text-3xl text-center mb-10">
