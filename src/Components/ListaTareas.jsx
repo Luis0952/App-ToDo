@@ -1,6 +1,6 @@
 import { Tareas } from "./Tareas";
 
-export const ListaTareas = ({ tareas, setTarea }) => {
+export const ListaTareas = ({ tareas, setTarea, eliminarTarea }) => {
   return (
     <div className="md:w-1/2 lg:2/5 mx-5 mb-10 mt-5 md:h-screen overflow-scroll">
       {tareas && tareas.length ? (
@@ -11,14 +11,20 @@ export const ListaTareas = ({ tareas, setTarea }) => {
             Mis Tareas Pendientes 📚
           </h2>
           {tareas.map((tarea) => {
-            return <Tareas key={tarea.id} tarea={tarea} setTarea={setTarea}/>;
+            return (
+              <Tareas
+                key={tarea.id}
+                tarea={tarea}
+                setTarea={setTarea}
+                eliminarTarea={eliminarTarea}/>
+            );
           })}
           )
         </>
       ) : (
         <h2 className="text-violet-700 font-black text-3xl text-center mb-10">
-            No tienes Tareas Pendientes 🤷‍♂️
-          </h2>
+          No tienes Tareas Pendientes 🤷‍♂️
+        </h2>
       )}
     </div>
   );

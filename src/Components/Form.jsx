@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { AlertError } from "./AlertError";
 
-export const Form = ({ tareas, setTareas, tarea }) => {
+export const Form = ({ tareas, setTareas, tarea, setTarea }) => {
   const [titulo, setTitulo] = useState("");
   const [fecha, setFecha] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -33,12 +33,24 @@ export const Form = ({ tareas, setTareas, tarea }) => {
     const objetoTareas = {
       titulo,
       fecha,
-      descripcion,
-      id: generarId(),
+      descripcion
     };
 
-    setTareas([...tareas, objetoTareas]);
+    if (tarea.id) {
+      //EDITANDO TAREA
+      objetoTareas.id=tarea.id
+      const tareasActualizadas = tareas.map((tareaState) =>
+        tareaState.id === tarea.id ? objetoTareas : tareaState
+      );
+      setTareas(tareasActualizadas)
+      setTarea({})
+    } else {
+      //NUEVA  TAREA
+      objetoTareas.id = generarId();
+      setTareas([...tareas, objetoTareas]);
+    }
 
+    //Limpiar Formulario
     setTitulo("");
     setFecha("");
     setDescripcion("");
